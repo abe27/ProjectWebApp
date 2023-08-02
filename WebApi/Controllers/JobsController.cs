@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models;
@@ -7,58 +12,55 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class BranchesController : ControllerBase
+    public class JobsController : ControllerBase
     {
         private readonly WebApiContext _context;
 
-        public BranchesController(WebApiContext context)
+        public JobsController(WebApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Branches
+        // GET: api/Jobs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Branch>>> GetBranch()
+        public async Task<ActionResult<IEnumerable<Job>>> GetJob()
         {
-            if (_context.Branch == null)
+            if (_context.Job == null)
             {
                 return NotFound();
             }
-
-            return await _context.Branch.Include(g => g.corp).ToListAsync();
+            return await _context.Job.ToListAsync();
         }
 
-        // GET: api/Branches/5
+        // GET: api/Jobs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Branch>> GetBranch(string id)
+        public async Task<ActionResult<Job>> GetJob(string id)
         {
-            if (_context.Branch == null)
+            if (_context.Job == null)
             {
                 return NotFound();
             }
-            var branch = await _context.Branch.FindAsync(id);
+            var job = await _context.Job.FindAsync(id);
 
-            if (branch == null)
+            if (job == null)
             {
                 return NotFound();
             }
 
-            var corp = _context.Corp.Find(branch.fccorp);
-            branch.corp = corp;
-            return branch;
+            return job;
         }
 
-        // PUT: api/Branches/5
+        // PUT: api/Jobs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutBranch(string id, Branch branch)
+        public async Task<IActionResult> PutJob(string id, Job job)
         {
-            if (id != branch.fcskid)
+            if (id != job.Fcskid)
             {
                 return BadRequest();
             }
 
-            _context.Entry(branch).State = EntityState.Modified;
+            _context.Entry(job).State = EntityState.Modified;
 
             try
             {
@@ -66,7 +68,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!BranchExists(id))
+                if (!JobExists(id))
                 {
                     return NotFound();
                 }
@@ -79,23 +81,23 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        //// POST: api/Branches
+        //// POST: api/Jobs
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Branch>> PostBranch(Branch branch)
+        //public async Task<ActionResult<Job>> PostJob(Job job)
         //{
-        //    if (_context.Branch == null)
-        //    {
-        //        return Problem("Entity set 'WebApiContext.Branch'  is null.");
-        //    }
-        //    _context.Branch.Add(branch);
+        //  if (_context.Job == null)
+        //  {
+        //      return Problem("Entity set 'WebApiContext.Job'  is null.");
+        //  }
+        //    _context.Job.Add(job);
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
         //    catch (DbUpdateException)
         //    {
-        //        if (BranchExists(branch.fcskid))
+        //        if (JobExists(job.Fcskid))
         //        {
         //            return Conflict();
         //        }
@@ -105,32 +107,32 @@ namespace WebApi.Controllers
         //        }
         //    }
 
-        //    return CreatedAtAction("GetBranch", new { id = branch.fcskid }, branch);
+        //    return CreatedAtAction("GetJob", new { id = job.Fcskid }, job);
         //}
 
-        //// DELETE: api/Branches/5
+        //// DELETE: api/Jobs/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteBranch(string id)
+        //public async Task<IActionResult> DeleteJob(string id)
         //{
-        //    if (_context.Branch == null)
+        //    if (_context.Job == null)
         //    {
         //        return NotFound();
         //    }
-        //    var branch = await _context.Branch.FindAsync(id);
-        //    if (branch == null)
+        //    var job = await _context.Job.FindAsync(id);
+        //    if (job == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Branch.Remove(branch);
+        //    _context.Job.Remove(job);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        private bool BranchExists(string id)
+        private bool JobExists(string id)
         {
-            return (_context.Branch?.Any(e => e.fcskid == id)).GetValueOrDefault();
+            return (_context.Job?.Any(e => e.Fcskid == id)).GetValueOrDefault();
         }
     }
 }

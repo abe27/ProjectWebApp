@@ -6,6 +6,11 @@ namespace WebApi.Models
     [Table("CORP")]
     public class Corp
     {
+        //public Corp()
+        //{
+        //    branch = new Branch();
+        //}
+
         [Key]
         [StringLength(8)]
         [Column("FCSKID")]
@@ -41,8 +46,8 @@ namespace WebApi.Models
         [Column("FCFAX")]
         public string? fcfax { get; set; }
 
-        //[Column("FCCORP")]
-        [ForeignKey(nameof(fcskid))]
-        public virtual Branch? branch { get; set; }
+        ////[Column("FCCORP")]
+        //[ForeignKey(nameof(fcskid))]
+        //public virtual Branch? branch { get; set; }
     }
 }

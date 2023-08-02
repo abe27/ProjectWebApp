@@ -33,5 +33,11 @@ namespace WebApi.Data
         public DbSet<WebApi.Models.Book> Book { get; set; } = default!;
 
         public DbSet<WebApi.Models.Branch> Branch { get; set; } = default!;
+
+        public DbSet<WebApi.Models.Job> Job { get; set; } = default!;
+
+        public DbSet<WebApi.Models.ProductType> ProductType { get; set; } = default!;
+
+        public DbSet<WebApi.Models.Product> Product { get; set; } = default!;
     }
 }

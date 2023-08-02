@@ -6,7 +6,8 @@ namespace WebApi.Models
     [Table("BRANCH")]
     public class Branch
     {
-        public Branch() { 
+        public Branch()
+        {
             corp = new Corp();
         }
 
