@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models;
@@ -7,55 +12,55 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class CorpsController : ControllerBase
     {
         private readonly WebApiContext _context;
 
-        public EmployeeController(WebApiContext context)
+        public CorpsController(WebApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Corps
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Emplr>>> GetEmplr()
+        public async Task<ActionResult<IEnumerable<Corp>>> GetCorp()
         {
-            if (_context.Emplr == null)
+            if (_context.Corp == null)
             {
                 return NotFound();
             }
-            return await _context.Emplr.ToListAsync();
+            return await _context.Corp.ToListAsync();
         }
 
-        // GET: api/Employee/5
+        // GET: api/Corps/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Emplr>> GetEmplr(string id)
+        public async Task<ActionResult<Corp>> GetCorp(string id)
         {
-            if (_context.Emplr == null)
+            if (_context.Corp == null)
             {
                 return NotFound();
             }
-            var emplr = await _context.Emplr.FindAsync(id);
+            var corp = await _context.Corp.FindAsync(id);
 
-            if (emplr == null)
+            if (corp == null)
             {
                 return NotFound();
             }
 
-            return emplr;
+            return corp;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Corps/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmplr(string id, Emplr emplr)
+        public async Task<IActionResult> PutCorp(string id, Corp corp)
         {
-            if (id != emplr.Fcskid)
+            if (id != corp.fcskid)
             {
                 return BadRequest();
             }
 
-            _context.Entry(emplr).State = EntityState.Modified;
+            _context.Entry(corp).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +68,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmplrExists(id))
+                if (!CorpExists(id))
                 {
                     return NotFound();
                 }
@@ -76,27 +81,23 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        //// POST: api/Employee
+        //// POST: api/Corps
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Emplr>> PostEmplr(Emplr emplr)
+        //public async Task<ActionResult<Corp>> PostCorp(Corp corp)
         //{
-        //    if (_context.Emplr == null)
-        //    {
-        //        return Problem("Entity set 'WebApiContext.Emplr'  is null.");
-        //    }
-
-        //    emplr.Fcskid = Nanoid.Generate(size: 8);
-        //    emplr.Fclogin = emplr.Fclogin.Trim().ToUpper();
-        //    emplr.Fcpw = emplr.Fcpw.Trim().ToUpper();
-        //    _context.Emplr.Add(emplr);
+        //  if (_context.Corp == null)
+        //  {
+        //      return Problem("Entity set 'WebApiContext.Corp'  is null.");
+        //  }
+        //    _context.Corp.Add(corp);
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
         //    catch (DbUpdateException)
         //    {
-        //        if (EmplrExists(emplr.Fcskid))
+        //        if (CorpExists(corp.fcskid))
         //        {
         //            return Conflict();
         //        }
@@ -106,32 +107,32 @@ namespace WebApi.Controllers
         //        }
         //    }
 
-        //    return CreatedAtAction("GetEmplr", new { id = emplr.Fcskid }, emplr);
+        //    return CreatedAtAction("GetCorp", new { id = corp.fcskid }, corp);
         //}
 
-        //// DELETE: api/Employee/5
+        //// DELETE: api/Corps/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEmplr(string id)
+        //public async Task<IActionResult> DeleteCorp(string id)
         //{
-        //    if (_context.Emplr == null)
+        //    if (_context.Corp == null)
         //    {
         //        return NotFound();
         //    }
-        //    var emplr = await _context.Emplr.FindAsync(id);
-        //    if (emplr == null)
+        //    var corp = await _context.Corp.FindAsync(id);
+        //    if (corp == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Emplr.Remove(emplr);
+        //    _context.Corp.Remove(corp);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        private bool EmplrExists(string id)
+        private bool CorpExists(string id)
         {
-            return (_context.Emplr?.Any(e => e.Fcskid == id)).GetValueOrDefault();
+            return (_context.Corp?.Any(e => e.fcskid == id)).GetValueOrDefault();
         }
     }
 }

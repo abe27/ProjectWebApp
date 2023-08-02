@@ -7,55 +7,55 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class WhsController : ControllerBase
     {
         private readonly WebApiContext _context;
 
-        public EmployeeController(WebApiContext context)
+        public WhsController(WebApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Whs
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Emplr>>> GetEmplr()
+        public async Task<ActionResult<IEnumerable<Whs>>> GetWhs()
         {
-            if (_context.Emplr == null)
+            if (_context.Whs == null)
             {
                 return NotFound();
             }
-            return await _context.Emplr.ToListAsync();
+            return await _context.Whs.ToListAsync();
         }
 
-        // GET: api/Employee/5
+        // GET: api/Whs/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Emplr>> GetEmplr(string id)
+        public async Task<ActionResult<Whs>> GetWhs(string id)
         {
-            if (_context.Emplr == null)
+            if (_context.Whs == null)
             {
                 return NotFound();
             }
-            var emplr = await _context.Emplr.FindAsync(id);
+            var whs = await _context.Whs.FindAsync(id);
 
-            if (emplr == null)
+            if (whs == null)
             {
                 return NotFound();
             }
 
-            return emplr;
+            return whs;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Whs/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmplr(string id, Emplr emplr)
+        public async Task<IActionResult> PutWhs(string id, Whs whs)
         {
-            if (id != emplr.Fcskid)
+            if (id != whs.Fcskid)
             {
                 return BadRequest();
             }
 
-            _context.Entry(emplr).State = EntityState.Modified;
+            _context.Entry(whs).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +63,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmplrExists(id))
+                if (!WhsExists(id))
                 {
                     return NotFound();
                 }
@@ -76,27 +76,23 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        //// POST: api/Employee
+        //// POST: api/Whs
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Emplr>> PostEmplr(Emplr emplr)
+        //public async Task<ActionResult<Whs>> PostWhs(Whs whs)
         //{
-        //    if (_context.Emplr == null)
-        //    {
-        //        return Problem("Entity set 'WebApiContext.Emplr'  is null.");
-        //    }
-
-        //    emplr.Fcskid = Nanoid.Generate(size: 8);
-        //    emplr.Fclogin = emplr.Fclogin.Trim().ToUpper();
-        //    emplr.Fcpw = emplr.Fcpw.Trim().ToUpper();
-        //    _context.Emplr.Add(emplr);
+        //  if (_context.Whs == null)
+        //  {
+        //      return Problem("Entity set 'WebApiContext.Whs'  is null.");
+        //  }
+        //    _context.Whs.Add(whs);
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
         //    catch (DbUpdateException)
         //    {
-        //        if (EmplrExists(emplr.Fcskid))
+        //        if (WhsExists(whs.Fcskid))
         //        {
         //            return Conflict();
         //        }
@@ -106,32 +102,32 @@ namespace WebApi.Controllers
         //        }
         //    }
 
-        //    return CreatedAtAction("GetEmplr", new { id = emplr.Fcskid }, emplr);
+        //    return CreatedAtAction("GetWhs", new { id = whs.Fcskid }, whs);
         //}
 
-        //// DELETE: api/Employee/5
+        //// DELETE: api/Whs/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEmplr(string id)
+        //public async Task<IActionResult> DeleteWhs(string id)
         //{
-        //    if (_context.Emplr == null)
+        //    if (_context.Whs == null)
         //    {
         //        return NotFound();
         //    }
-        //    var emplr = await _context.Emplr.FindAsync(id);
-        //    if (emplr == null)
+        //    var whs = await _context.Whs.FindAsync(id);
+        //    if (whs == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Emplr.Remove(emplr);
+        //    _context.Whs.Remove(whs);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        private bool EmplrExists(string id)
+        private bool WhsExists(string id)
         {
-            return (_context.Emplr?.Any(e => e.Fcskid == id)).GetValueOrDefault();
+            return (_context.Whs?.Any(e => e.Fcskid == id)).GetValueOrDefault();
         }
     }
 }

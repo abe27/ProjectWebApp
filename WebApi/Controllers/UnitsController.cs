@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models;
@@ -7,55 +12,55 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class UnitsController : ControllerBase
     {
         private readonly WebApiContext _context;
 
-        public EmployeeController(WebApiContext context)
+        public UnitsController(WebApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Units
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Emplr>>> GetEmplr()
+        public async Task<ActionResult<IEnumerable<Unit>>> GetUnit()
         {
-            if (_context.Emplr == null)
+            if (_context.Unit == null)
             {
                 return NotFound();
             }
-            return await _context.Emplr.ToListAsync();
+            return await _context.Unit.ToListAsync();
         }
 
-        // GET: api/Employee/5
+        // GET: api/Units/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Emplr>> GetEmplr(string id)
+        public async Task<ActionResult<Unit>> GetUnit(string id)
         {
-            if (_context.Emplr == null)
+            if (_context.Unit == null)
             {
                 return NotFound();
             }
-            var emplr = await _context.Emplr.FindAsync(id);
+            var unit = await _context.Unit.FindAsync(id);
 
-            if (emplr == null)
+            if (unit == null)
             {
                 return NotFound();
             }
 
-            return emplr;
+            return unit;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Units/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmplr(string id, Emplr emplr)
+        public async Task<IActionResult> PutUnit(string id, Unit unit)
         {
-            if (id != emplr.Fcskid)
+            if (id != unit.Fcskid)
             {
                 return BadRequest();
             }
 
-            _context.Entry(emplr).State = EntityState.Modified;
+            _context.Entry(unit).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +68,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmplrExists(id))
+                if (!UnitExists(id))
                 {
                     return NotFound();
                 }
@@ -76,27 +81,23 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        //// POST: api/Employee
+        //// POST: api/Units
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Emplr>> PostEmplr(Emplr emplr)
+        //public async Task<ActionResult<Unit>> PostUnit(Unit unit)
         //{
-        //    if (_context.Emplr == null)
-        //    {
-        //        return Problem("Entity set 'WebApiContext.Emplr'  is null.");
-        //    }
-
-        //    emplr.Fcskid = Nanoid.Generate(size: 8);
-        //    emplr.Fclogin = emplr.Fclogin.Trim().ToUpper();
-        //    emplr.Fcpw = emplr.Fcpw.Trim().ToUpper();
-        //    _context.Emplr.Add(emplr);
+        //  if (_context.Unit == null)
+        //  {
+        //      return Problem("Entity set 'WebApiContext.Unit'  is null.");
+        //  }
+        //    _context.Unit.Add(unit);
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
         //    catch (DbUpdateException)
         //    {
-        //        if (EmplrExists(emplr.Fcskid))
+        //        if (UnitExists(unit.Fcskid))
         //        {
         //            return Conflict();
         //        }
@@ -106,32 +107,32 @@ namespace WebApi.Controllers
         //        }
         //    }
 
-        //    return CreatedAtAction("GetEmplr", new { id = emplr.Fcskid }, emplr);
+        //    return CreatedAtAction("GetUnit", new { id = unit.Fcskid }, unit);
         //}
 
-        //// DELETE: api/Employee/5
+        //// DELETE: api/Units/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEmplr(string id)
+        //public async Task<IActionResult> DeleteUnit(string id)
         //{
-        //    if (_context.Emplr == null)
+        //    if (_context.Unit == null)
         //    {
         //        return NotFound();
         //    }
-        //    var emplr = await _context.Emplr.FindAsync(id);
-        //    if (emplr == null)
+        //    var unit = await _context.Unit.FindAsync(id);
+        //    if (unit == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Emplr.Remove(emplr);
+        //    _context.Unit.Remove(unit);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        private bool EmplrExists(string id)
+        private bool UnitExists(string id)
         {
-            return (_context.Emplr?.Any(e => e.Fcskid == id)).GetValueOrDefault();
+            return (_context.Unit?.Any(e => e.Fcskid == id)).GetValueOrDefault();
         }
     }
 }

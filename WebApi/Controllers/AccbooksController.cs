@@ -1,4 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models;
@@ -7,55 +12,55 @@ namespace WebApi.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class EmployeeController : ControllerBase
+    public class AccbooksController : ControllerBase
     {
         private readonly WebApiContext _context;
 
-        public EmployeeController(WebApiContext context)
+        public AccbooksController(WebApiContext context)
         {
             _context = context;
         }
 
-        // GET: api/Employee
+        // GET: api/Accbooks
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Emplr>>> GetEmplr()
+        public async Task<ActionResult<IEnumerable<Accbook>>> GetAccbook()
         {
-            if (_context.Emplr == null)
+            if (_context.Accbook == null)
             {
                 return NotFound();
             }
-            return await _context.Emplr.ToListAsync();
+            return await _context.Accbook.ToListAsync();
         }
 
-        // GET: api/Employee/5
+        // GET: api/Accbooks/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<Emplr>> GetEmplr(string id)
+        public async Task<ActionResult<Accbook>> GetAccbook(string id)
         {
-            if (_context.Emplr == null)
+            if (_context.Accbook == null)
             {
                 return NotFound();
             }
-            var emplr = await _context.Emplr.FindAsync(id);
+            var accbook = await _context.Accbook.FindAsync(id);
 
-            if (emplr == null)
+            if (accbook == null)
             {
                 return NotFound();
             }
 
-            return emplr;
+            return accbook;
         }
 
-        // PUT: api/Employee/5
+        // PUT: api/Accbooks/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutEmplr(string id, Emplr emplr)
+        public async Task<IActionResult> PutAccbook(string id, Accbook accbook)
         {
-            if (id != emplr.Fcskid)
+            if (id != accbook.fcskid)
             {
                 return BadRequest();
             }
 
-            _context.Entry(emplr).State = EntityState.Modified;
+            _context.Entry(accbook).State = EntityState.Modified;
 
             try
             {
@@ -63,7 +68,7 @@ namespace WebApi.Controllers
             }
             catch (DbUpdateConcurrencyException)
             {
-                if (!EmplrExists(id))
+                if (!AccbookExists(id))
                 {
                     return NotFound();
                 }
@@ -76,27 +81,23 @@ namespace WebApi.Controllers
             return NoContent();
         }
 
-        //// POST: api/Employee
+        //// POST: api/Accbooks
         //// To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         //[HttpPost]
-        //public async Task<ActionResult<Emplr>> PostEmplr(Emplr emplr)
+        //public async Task<ActionResult<Accbook>> PostAccbook(Accbook accbook)
         //{
-        //    if (_context.Emplr == null)
-        //    {
-        //        return Problem("Entity set 'WebApiContext.Emplr'  is null.");
-        //    }
-
-        //    emplr.Fcskid = Nanoid.Generate(size: 8);
-        //    emplr.Fclogin = emplr.Fclogin.Trim().ToUpper();
-        //    emplr.Fcpw = emplr.Fcpw.Trim().ToUpper();
-        //    _context.Emplr.Add(emplr);
+        //  if (_context.Accbook == null)
+        //  {
+        //      return Problem("Entity set 'WebApiContext.Accbook'  is null.");
+        //  }
+        //    _context.Accbook.Add(accbook);
         //    try
         //    {
         //        await _context.SaveChangesAsync();
         //    }
         //    catch (DbUpdateException)
         //    {
-        //        if (EmplrExists(emplr.Fcskid))
+        //        if (AccbookExists(accbook.fcskid))
         //        {
         //            return Conflict();
         //        }
@@ -106,32 +107,32 @@ namespace WebApi.Controllers
         //        }
         //    }
 
-        //    return CreatedAtAction("GetEmplr", new { id = emplr.Fcskid }, emplr);
+        //    return CreatedAtAction("GetAccbook", new { id = accbook.fcskid }, accbook);
         //}
 
-        //// DELETE: api/Employee/5
+        //// DELETE: api/Accbooks/5
         //[HttpDelete("{id}")]
-        //public async Task<IActionResult> DeleteEmplr(string id)
+        //public async Task<IActionResult> DeleteAccbook(string id)
         //{
-        //    if (_context.Emplr == null)
+        //    if (_context.Accbook == null)
         //    {
         //        return NotFound();
         //    }
-        //    var emplr = await _context.Emplr.FindAsync(id);
-        //    if (emplr == null)
+        //    var accbook = await _context.Accbook.FindAsync(id);
+        //    if (accbook == null)
         //    {
         //        return NotFound();
         //    }
 
-        //    _context.Emplr.Remove(emplr);
+        //    _context.Accbook.Remove(accbook);
         //    await _context.SaveChangesAsync();
 
         //    return NoContent();
         //}
 
-        private bool EmplrExists(string id)
+        private bool AccbookExists(string id)
         {
-            return (_context.Emplr?.Any(e => e.Fcskid == id)).GetValueOrDefault();
+            return (_context.Accbook?.Any(e => e.fcskid == id)).GetValueOrDefault();
         }
     }
 }
