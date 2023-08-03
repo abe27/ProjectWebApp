@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using WebApi.Data;
 using WebApi.Models;
@@ -21,16 +16,16 @@ namespace WebApi.Controllers
             _context = context;
         }
 
-        // GET: api/Products
-        [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProduct(int limit)
-        {
-            if (_context.Product == null)
-            {
-                return NotFound();
-            }
-            return await _context.Product.ToListAsync();
-        }
+        //// GET: api/Products
+        //[HttpGet]
+        //public async Task<ActionResult<IEnumerable<Product>>> GetProduct(int limit)
+        //{
+        //    if (_context.Product == null)
+        //    {
+        //        return NotFound();
+        //    }
+        //    return await _context.Product.ToListAsync();
+        //}
 
         // GET: api/Products/5
         [HttpGet("{id}")]

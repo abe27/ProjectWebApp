@@ -600,5 +600,7 @@ namespace WebApi.Models
         public DateTime? ftsrcupd { get; set; }
 
         //UM         *Unit     `gorm:"foreignKey:FCUM;references:FCSKID;" json:"unit"`
+        [ForeignKey(nameof(fcum))]
+        public Unit unit { get; set; }
     }
 }
